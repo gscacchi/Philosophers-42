@@ -45,11 +45,15 @@ void    *ft_routine(void *argp)
 {
 	t_philo *philo;
 	philo = (t_philo *)argp;
+	pthread_mutex_lock(&philo->t_mutex->mutex_stampa);
 	while (1)
 	{
+		if (ft_end_eating(philo) == 1)
+			ft_print_all(philo, 'q');
 		ft_eating(philo);
 		ft_sleep(philo);
 		ft_think(philo);
 	}
+	pthread_mutex_unlock(&philo->t_mutex->mutex_stampa);
 	return(NULL);
 }

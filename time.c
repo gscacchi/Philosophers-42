@@ -38,21 +38,31 @@ void    ft_print_all(t_philo *philo, char c)
 	tmilli = end - philo->data->start;
 
 	pthread_mutex_lock(&philo->t_mutex->mutex_stampa);
-    if (c == 'l')
-        printf("\e[1;34m%llu \e[0m philo %d has taken left fork\n", tmilli, philo->indice + 1);
-    if (c == 'r')
-        printf("\e[0;36m%llu \e[0m philo %d has taken right fork\n", tmilli, philo->indice + 1);
-    if (c == 'e')
-    {
-        //printf("Actual time %llu\n", philo->data->actual_time);
-        philo->time_has_eaten = philo->time_has_eaten + 1;
-        //philo->start = philo->data->actual_time;
-        printf("\e[0;32m%llu \e[0m philo %d is eating\n", tmilli, philo->indice + 1);
-        printf("philo %d has eaten %d times\n", philo->indice + 1, philo->time_has_eaten);
-    }
-    if (c == 's')
-        printf("\e[0;37m%llu \e[0m philo %d is sleeping\n", tmilli, philo->indice + 1);
-    if (c == 't')
-        printf("\e[0;33m%llu \e[0m philo %d is thinking\n", tmilli, philo->indice + 1);
-    pthread_mutex_unlock(&philo->t_mutex->mutex_stampa);
+	if (c == 'd')
+	{
+		printf("Philo %d is dead\n", philo->indice + 1);
+		exit(0);
+	}
+	if (c == 'l')
+		printf("\e[1;34m%llu \e[0m philo %d has taken left fork\n", tmilli, philo->indice + 1);
+	if (c == 'r')
+		printf("\e[0;36m%llu \e[0m philo %d has taken right fork\n", tmilli, philo->indice + 1);
+	if (c == 'e')
+	{
+		philo->time_has_eaten = philo->time_has_eaten + 1;
+		if (philo->time_has_eaten == philo->data->times_must_eat)
+			philo->data->have_eaten += 1;
+		philo->moving_start = end;
+		printf("\e[0;32m%llu \e[0m philo %d is eating\n", tmilli, philo->indice + 1);
+	}
+	if (c == 's')
+		printf("\e[0;37m%llu \e[0m philo %d is sleeping\n", tmilli, philo->indice + 1);
+	if (c == 't')
+		printf("\e[0;33m%llu \e[0m philo %d is thinking\n", tmilli, philo->indice + 1);
+	if (c == 'q')
+	{
+		printf("Everyone has eaten %d times\n", philo->data->times_must_eat);
+		exit(0);
+	}
+	pthread_mutex_unlock(&philo->t_mutex->mutex_stampa);
 }

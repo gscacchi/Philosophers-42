@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+//to fix: -More philos dying at the same time
+//sometimes after they die or have eaten enough times other philos do something
+
 #include "philosophers.h"
 
 int 	ft_check_arguments(int argc, char **argv)
@@ -67,12 +70,14 @@ void 	ft_init(t_philo *philo, t_mutex *mutex, t_data *data, int n)
         i++;
 	}
 	i = 0;
+	//pthread_mutex_init(&philo->t_mutex->mutex_stampa, NULL);
 	while (i < n)
 	{
 		philo[i].t_mutex = mutex;
 		philo[i].indice = i;
 		pthread_create(&philo[i].philosopher, NULL, &ft_routine, &philo[i]);
-		//pthread_create(&philo[i].check, NULL, &ft_check_if_dead, &philo[i]);
+		usleep(50);
+		pthread_create(&philo[i].check, NULL, &ft_check_if_dead, &philo[i]);
 		i += 2;
 	}
 	i = 1;
@@ -81,10 +86,10 @@ void 	ft_init(t_philo *philo, t_mutex *mutex, t_data *data, int n)
     	philo[i].t_mutex = mutex;
     	philo[i].indice = i;
     	pthread_create(&philo[i].philosopher, NULL, &ft_routine, &philo[i]);
-		//pthread_create(&philo[i].check, NULL, &ft_check_if_dead, &philo[i]);
+		usleep(50);
+		pthread_create(&philo[i].check, NULL, &ft_check_if_dead, &philo[i]);
 		i += 2;
 	}
-	pthread_mutex_init(&philo->t_mutex->mutex_stampa, NULL);
 	i = 0;
 	while (i < n)
 	{
@@ -106,6 +111,7 @@ int		main(int argc, char **argv)
 	mutex.mutex = malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
 	philo = malloc(sizeof(t_philo) * ft_atoi(argv[1]));
 	data.start = ft_get_time();
+	data.have_eaten = 0;
 	ft_parsing(&data, argc, &(*argv));
 	ft_init(philo, &mutex, &data, ft_atoi(argv[1]));
 	while (i < data.number_of_philosophers)

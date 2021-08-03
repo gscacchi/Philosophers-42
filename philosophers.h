@@ -19,6 +19,7 @@ typedef	struct 	s_data{
 	int			time_to_eat;
 	int			time_to_sleep;
 	int			times_must_eat;
+	int 		have_eaten;
 	u_int64_t	start;
 }				t_data;
 
@@ -29,6 +30,7 @@ typedef	struct	s_philo{
 	struct s_data	*data;
 	struct s_mutex	*t_mutex;
 	pthread_t	check;
+	u_int64_t	moving_start;
 }				t_philo;
 
 int		ft_atoi(char *str);
@@ -40,6 +42,9 @@ void    ft_eating(t_philo *philo);
 void    *ft_routine(void *argp);
 uint64_t	ft_get_time(void);
 void	ft_usleep(int time, t_data *data);
+void	*ft_check_if_dead(void *argp);
+void 	*ft_check_if_dead_2(t_philo *philo);
+int 	ft_end_eating(t_philo *philo);
 
 
 #endif
