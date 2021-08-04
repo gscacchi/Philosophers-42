@@ -12,7 +12,7 @@
 
 #include "philosophers.h"
 
-void	ft_usleep(int time, t_data *data)
+void	ft_usleep(int time)
 {
 	unsigned long	end;
 
@@ -40,7 +40,7 @@ void    ft_print_all(t_philo *philo, char c)
 	pthread_mutex_lock(&philo->t_mutex->mutex_stampa);
 	if (c == 'd')
 	{
-		printf("Philo %d is dead\n", philo->indice + 1);
+		printf("\e[0;33m%llu \e[0m Philo %d is dead\n", tmilli, philo->indice + 1);
 		exit(0);
 	}
 	if (c == 'l')
@@ -61,7 +61,7 @@ void    ft_print_all(t_philo *philo, char c)
 		printf("\e[0;33m%llu \e[0m philo %d is thinking\n", tmilli, philo->indice + 1);
 	if (c == 'q')
 	{
-		printf("Everyone has eaten %d times\n", philo->data->times_must_eat);
+		printf("\e[0;33m%llu \e[0m Everyone has eaten %d times\n", tmilli, philo->data->times_must_eat);
 		exit(0);
 	}
 	pthread_mutex_unlock(&philo->t_mutex->mutex_stampa);

@@ -20,7 +20,7 @@ void    ft_think(t_philo *philo)
 void    ft_sleep(t_philo *philo)
 {
 	ft_print_all(philo, 's');
-	ft_usleep(philo->data->time_to_sleep, philo->data);
+	ft_usleep(philo->data->time_to_sleep);
 }
 
 void    ft_eating(t_philo *philo)
@@ -33,7 +33,7 @@ void    ft_eating(t_philo *philo)
 		pthread_mutex_lock(&philo->t_mutex->mutex[0]);
 	ft_print_all(philo, 'r');
 	ft_print_all(philo, 'e');
-	ft_usleep(philo->data->time_to_eat, philo->data);
+	ft_usleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(&philo->t_mutex->mutex[philo->indice]);
 	if (philo->indice != philo->data->number_of_philosophers - 1)
 		pthread_mutex_unlock(&philo->t_mutex->mutex[philo->indice + 1]);
@@ -45,7 +45,7 @@ void    *ft_routine(void *argp)
 {
 	t_philo *philo;
 	philo = (t_philo *)argp;
-	pthread_mutex_lock(&philo->t_mutex->mutex_stampa);
+	//pthread_mutex_lock(&philo->t_mutex->mutex_stampa);
 	while (1)
 	{
 		if (ft_end_eating(philo) == 1)
@@ -54,6 +54,6 @@ void    *ft_routine(void *argp)
 		ft_sleep(philo);
 		ft_think(philo);
 	}
-	pthread_mutex_unlock(&philo->t_mutex->mutex_stampa);
+	//pthread_mutex_unlock(&philo->t_mutex->mutex_stampa);
 	return(NULL);
 }

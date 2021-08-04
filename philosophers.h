@@ -41,7 +41,7 @@ void    ft_sleep(t_philo *philo);
 void    ft_eating(t_philo *philo);
 void    *ft_routine(void *argp);
 uint64_t	ft_get_time(void);
-void	ft_usleep(int time, t_data *data);
+void	ft_usleep(int time);
 void	*ft_check_if_dead(void *argp);
 void 	*ft_check_if_dead_2(t_philo *philo);
 int 	ft_end_eating(t_philo *philo);

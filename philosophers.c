@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//to fix: -More philos dying at the same time
-//sometimes after they die or have eaten enough times other philos do something
 
 #include "philosophers.h"
 
@@ -70,14 +68,13 @@ void 	ft_init(t_philo *philo, t_mutex *mutex, t_data *data, int n)
         i++;
 	}
 	i = 0;
-	//pthread_mutex_init(&philo->t_mutex->mutex_stampa, NULL);
 	while (i < n)
 	{
 		philo[i].t_mutex = mutex;
 		philo[i].indice = i;
 		pthread_create(&philo[i].philosopher, NULL, &ft_routine, &philo[i]);
-		usleep(50);
 		pthread_create(&philo[i].check, NULL, &ft_check_if_dead, &philo[i]);
+		usleep(5);
 		i += 2;
 	}
 	i = 1;
@@ -86,8 +83,8 @@ void 	ft_init(t_philo *philo, t_mutex *mutex, t_data *data, int n)
     	philo[i].t_mutex = mutex;
     	philo[i].indice = i;
     	pthread_create(&philo[i].philosopher, NULL, &ft_routine, &philo[i]);
-		usleep(50);
 		pthread_create(&philo[i].check, NULL, &ft_check_if_dead, &philo[i]);
+		usleep(5);
 		i += 2;
 	}
 	i = 0;
@@ -113,6 +110,7 @@ int		main(int argc, char **argv)
 	data.start = ft_get_time();
 	data.have_eaten = 0;
 	ft_parsing(&data, argc, &(*argv));
+	pthread_mutex_init(&mutex.mutex_stampa, NULL);
 	ft_init(philo, &mutex, &data, ft_atoi(argv[1]));
 	while (i < data.number_of_philosophers)
 	{
