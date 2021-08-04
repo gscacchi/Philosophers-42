@@ -40,7 +40,7 @@ void    ft_print_all(t_philo *philo, char c)
 	pthread_mutex_lock(&philo->t_mutex->mutex_stampa);
 	if (c == 'd')
 	{
-		printf("\e[0;33m%llu \e[0m Philo %d is dead\n", tmilli, philo->indice + 1);
+		printf("Philo %d is dead\n", philo->indice + 1);
 		exit(0);
 	}
 	if (c == 'l')

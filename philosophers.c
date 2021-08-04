@@ -10,13 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+//time of death must be right
 
 #include "philosophers.h"
 
-int 	ft_check_arguments(int argc, char **argv)
+int	ft_check_arguments(int argc, char **argv)
 {
-	int i;
-	int k;
+	int	i;
+	int	k;
 
 	i = 1;
 	k = 0;
@@ -37,7 +38,7 @@ int 	ft_check_arguments(int argc, char **argv)
 	return(1);
 }
 
-void 	ft_parsing(t_data *data, int argc, char **argv)
+void	ft_parsing(t_data *data, int argc, char **argv)
 {
 	if (ft_check_arguments(argc, &(*argv)) != 1)
 	{
@@ -60,7 +61,7 @@ void 	ft_init(t_philo *philo, t_mutex *mutex, t_data *data, int n)
 	u_int64_t i;
 
 	i = 0;
-	while (i < n)
+	while (i < (u_int64_t)n)
 	{
 		pthread_mutex_init(&mutex->mutex[i], NULL);
 		philo[i].data = data;
@@ -68,7 +69,7 @@ void 	ft_init(t_philo *philo, t_mutex *mutex, t_data *data, int n)
         i++;
 	}
 	i = 0;
-	while (i < n)
+	while (i < (u_int64_t)n)
 	{
 		philo[i].t_mutex = mutex;
 		philo[i].indice = i;
@@ -78,7 +79,7 @@ void 	ft_init(t_philo *philo, t_mutex *mutex, t_data *data, int n)
 		i += 2;
 	}
 	i = 1;
-	while (i < n)
+	while (i < (u_int64_t)n)
     {   
     	philo[i].t_mutex = mutex;
     	philo[i].indice = i;
@@ -88,7 +89,7 @@ void 	ft_init(t_philo *philo, t_mutex *mutex, t_data *data, int n)
 		i += 2;
 	}
 	i = 0;
-	while (i < n)
+	while (i < (u_int64_t)n)
 	{
 		pthread_join(philo[i].philosopher, NULL);
 		pthread_join(philo[i].check, NULL);
@@ -102,7 +103,6 @@ int		main(int argc, char **argv)
 	u_int64_t 	i;
 	t_philo 	*philo;
 	t_mutex 	mutex;
-	int			k;
 
 	i = 0;
 	mutex.mutex = malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
@@ -112,7 +112,7 @@ int		main(int argc, char **argv)
 	ft_parsing(&data, argc, &(*argv));
 	pthread_mutex_init(&mutex.mutex_stampa, NULL);
 	ft_init(philo, &mutex, &data, ft_atoi(argv[1]));
-	while (i < data.number_of_philosophers)
+	while (i < (uint64_t)data.number_of_philosophers)
 	{
 		pthread_mutex_destroy(&mutex.mutex[i]);
 		i++;
