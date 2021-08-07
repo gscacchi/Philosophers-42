@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gscala <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/02 17:17:51 by gscala            #+#    #+#             */
-/*   Updated: 2021/08/02 17:17:54 by gscala           ###   ########.fr       */
+/*   Created: 2021/08/07 16:09:40 by gscala            #+#    #+#             */
+/*   Updated: 2021/08/07 16:09:42 by gscala           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,28 @@
 
 int	ft_atoi(char *str)
 {
-	int	sign;
 	int	i;
-	int	nums;
+	int	neg;
+	int	nbr;
 
 	i = 0;
-	sign = 1;
-	nums = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+	neg = 1;
+	nbr = 0;
+	while ((str[i] == '\t') || (str[i] == '\n') || (str[i] == '\v') || \
+		(str[i] == '\f') || (str[i] == '\r') || (str[i] == ' '))
 		i++;
-	if (str[i] == 45 || str[i] == 43)
+	if (str[i] == '-' || str[i] == '+')
 	{
-		if (str[i] == 45)
-			sign = sign * -1;
+		if (str[i] == '-')
+			neg = neg * -1;
 		i++;
 	}
-	while (str[i] >= 48 && str[i] <= 57)
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		nums *= 10;
-		nums += (str[i] - 48);
+		nbr = nbr * 10;
+		nbr = nbr + str[i] - '0';
 		i++;
 	}
-	if (nums < 0 && nums > -2147483648)
-		return (sign > 0 ? -1 : 0);
-	nums = nums * sign;
-	return (nums);
+	nbr = nbr * neg;
+	return (nbr);
 }
